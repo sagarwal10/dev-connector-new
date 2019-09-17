@@ -1,7 +1,27 @@
 import React, {Fragment, useState} from 'react';
+// connects component to react
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
+import PropTypes from 'prop-types'; 
 
-const Register = () => {
+// Basic Register Component
+// const Register = () => {
+//   return <div>Register</div>
+// }
+
+// Functional component with react hooks (instead of a class thus avoiding this binding)
+// https://reactjs.org/docs/hooks-intro.html
+//
+// setAlert is a property being based in as a parameter and is being destructured
+// from props. Otherwise it would look like the following 
+// const Register = (props) => {
+// and we would be calling props.setAlert
+const Register = ({ setAlert, register}) => {
+  // formData is current state, setFormData is used to change state
+  // arguments to useState (which is a react hook) is initial state
+  // syntax is array destructuring - can call useState multiple times
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -9,18 +29,27 @@ const Register = () => {
     password2: ''
   });
 
+  // pull out values using destructuring from current state
   const { name, email, password, password2 } = formData;
+
+  // ...formData is spread operator and copies data
+  // [] is a ES6 syntax that copies event target parameter change into string
   const onChange = e => setFormData({...formData, [e.target.name]:e.target.value});
   const onSubmit = async e => {
     e.preventDefault();
+
+    // using react hooks lets us use password directly instead of binding 
+    // this.state.password
     if (password !== password2) {
-      console.log("Passwords don't match");
+      setAlert('Passwords do not match', 'danger', 5000);
     } else {
-      console.log("New user");
+      register({name, email, password});
     }
   }; 
 
   return (
+    // A common pattern in React is for a component to return multiple elements. 
+    // Fragments let you group a list of children without adding extra nodes to the DOM.
     <Fragment>
       <h1 className="large text-primary">Sign Up</h1>
       <p className="lead"><i className="fas fa-user"></i> Create Your Account</p>
@@ -64,4 +93,13 @@ const Register = () => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired
+}; 
+
+// connect takes in two things
+// 1. Any state you want to map - in this case is null
+// 2. An object with any actions you want to use - allows
+//    us to use prop.setAlerts
+export default connect(null, { setAlert, register})(Register);
