@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
 // connects component to react
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types'; 
@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 // from props. Otherwise it would look like the following 
 // const Register = (props) => {
 // and we would be calling props.setAlert
-const Register = ({ setAlert, register}) => {
+const Register = ({ setAlert, register, isAuthenticated}) => {
   // formData is current state, setFormData is used to change state
   // arguments to useState (which is a react hook) is initial state
   // syntax is array destructuring - can call useState multiple times
@@ -46,6 +46,11 @@ const Register = ({ setAlert, register}) => {
       register({name, email, password});
     }
   }; 
+
+  // Redirect if logged in
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard"i />
+  } 
 
   return (
     // A common pattern in React is for a component to return multiple elements. 
@@ -95,11 +100,17 @@ const Register = ({ setAlert, register}) => {
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  register: PropTypes.func.isRequired
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+
 }; 
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
 
 // connect takes in two things
 // 1. Any state you want to map - in this case is null
 // 2. An object with any actions you want to use - allows
 //    us to use prop.setAlerts
-export default connect(null, { setAlert, register})(Register);
+export default connect(mapStateToProps, { setAlert, register})(Register);
