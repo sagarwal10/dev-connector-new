@@ -61,9 +61,15 @@ router.post('/', [auth,
     if (website) profileFields.website = website; 
     if (location) profileFields.location = location; 
     if (bio) profileFields.bio = bio; 
-    if (status) profileFields.status = status; 
+    if (status) profileFields.status = status;
+    if (githubusername) profileFields.githubusername = githubusername;
+    console.log(githubusername); 
     if (skills) {
-      profileFields.skills = skills.split(",").map(skill => skill.trim());
+      if (typeof(skills) === 'string') {
+        profileFields.skills = skills.split(",").map(skill => skill.trim());
+      } else {
+        profileFields.skills = skills;
+      }
     }
 
     // Build social object
