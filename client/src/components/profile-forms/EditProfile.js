@@ -51,7 +51,7 @@ const EditProfile = ({profile: {profile, loading},
       youtube: loading || !profile.social ? '' : profile.social.youtube,
       instagram: loading || !profile.social ? '' : profile.social.instagram,
     });
-  }, [loading]); // we only want to do this react hooks only when loading 
+  }, [loading, getCurrentProfile]); // we only want to do this react hooks only when loading 
 
   // Destructure 
   const { company,

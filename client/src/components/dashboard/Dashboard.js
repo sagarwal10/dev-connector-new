@@ -16,9 +16,10 @@ const Dashboard = ({getCurrentProfile, deleteAccount,
   // We want to get the users profile as soon as this component is loaded. 
   // Since this is a functional component, we have to use hooks to emulate
   // componentDidMount
+  // in the second argument we specify getCurrentProfile again as a dependency
   useEffect(() => {
     getCurrentProfile();
-  }, []);
+  }, [getCurrentProfile]);
   
   // If the profile is still loading from the server then display a spinner
   return loading && profile === null ? 
