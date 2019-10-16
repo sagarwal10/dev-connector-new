@@ -7,6 +7,7 @@ import ProfileTop from './ProfileTop';
 import ProfileAbout from './ProfileAbout';
 import ProfileExperience from './ProfileExperience'; 
 import ProfileEducation from './ProfileEducation'; 
+import ProfileGithub from './ProfileGithub'; 
 import { getProfileById} from '../../actions/profile';
 
 // get profile by user id which is passed in as part of URL
@@ -61,6 +62,7 @@ const Profile = ({ getProfileById,
 	         <h4>No education credentials</h4>
 	       )}
 	    </div>
+            {profile.githubusername && (<ProfileGithub username={profile.githubusername}  />)}
           </div>
         </Fragment>
       } 
