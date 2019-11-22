@@ -1,4 +1,4 @@
-import React, { Fragment }  from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom'; 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -39,7 +39,7 @@ const CommentItem = ({postId,
    ); 
 }
 
-const propTypes = {
+CommentItem.propTypes = {
   postId: PropTypes.number.isRequired,
   comment: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,

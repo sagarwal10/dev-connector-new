@@ -1,5 +1,4 @@
 import React, { Fragment} from 'react';
-import PropTypes from 'prop-types';
 
 const ProfileAbout = ({
     profile: {
@@ -23,7 +22,7 @@ const ProfileAbout = ({
         <h2 className="text-primary">Skill Set</h2>
         <div className="skills">
           {skills.map((skill, index) => (
-             <div key={index} classNameName="p-1">
+             <div key={index} className="p-1">
                <i className="fas fa-check"></i>
 		 {skill}
 	     </div>

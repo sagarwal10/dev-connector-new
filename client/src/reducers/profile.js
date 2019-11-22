@@ -21,8 +21,6 @@ export default function(state = initialState, action) {
         loading: false
       }
     case GET_PROFILES:
-      console.log("In reducer of GET");
-      
       return {
         ...state,
         profiles: payload,
